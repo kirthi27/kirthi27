@@ -1,131 +1,71 @@
-let icon=document.getElementById('carticon')
-let sidebar=document.getElementById('sidebar')
-const  product=[
-    { 
-         id:0,
-             image: './images/sleepover.jpg',
-         title: 'THE SLEEPOVER',
-        price: 500.00,
-    },
 
-    {
-        id:1,
-        image: './images/fish.jpg',
-        title: 'THE BRAVEST FISH',
-        price:600.00,
-    },
+let button=document.getElementById('add');
+let todolist=document.getElementById('todoList');
+let input=document.getElementById('input');
+let btndel=document.getElementById('delete')
 
+let todos=[];
 
-    {
-        id:2,
-        image: './images/Ivy-Bean.jpg',
-        title: 'IVY + BEAN ',
-        price:200.00,
-    },
-
-    {
-            id:3,
-            image: './images/Unicorn-Island.jpg',
-            title: 'UNICORN-ISLAND',
-            price:1000.00,
-    },
-    {
-        id:4,
-        image: './images/newtot.jpg',
-        title: 'THE NEW TOY',
-        price: 850.00
-    },
-
-    {
-        id:5,
-        image: './images/magicbook.jpg',
-        title: 'THE MAGIC WATER BOOK',
-        price: 850.00
-    },
-];
-
-
-function proceed() 
-{
-    alert("Proceed to payment");
-}
-const categories=[...new Set(product.map((item)=>  {return item}))]
-    let i=0;
-    document.getElementById('root').innerHTML= categories.map((item)=>
-    {
-        var{image,title,price} = item;
-        return(
-            `<div class='box'>
-                <div class='img-box'>
-                    <img class='images' src=${image}></img>
-                </div>
-                <div class='bottom'>
-                <p>${title}</p>
-                <h2>$ ${price}.00</h2>`+
-                "<button onclick='addtocart("+(i++)+")'>Add To Cart</button>"+
-            `</div>
-            </div>`
-        )
-    }).join('')
-
-    var cart=[];
-
-    function addtocart(a){
-        cart.push({...categories[a]});
-        displaycart();
-    }
-
-    function delElement(a){
-        cart.splice(a, 1);
-        displaycart();
-    }
-
-    function displaycart(a) {
-        let j=0;total=0;
-        document.getElementById("count").innerHTML=cart.length;
-
-        if(cart.length == 0){
-            document.getElementById('cartItem').innerHTML="Your cart is Empty";
-            document.getElementById("total").innerHTML="$ "+0+".00";
-
-        }
-        else{
-            document.getElementById("cartItem").innerHTML= cart.map((items)=>
-            {
-                var{image, title, price} = items;
-                total=total+price;
-                document.getElementById("total").innerHTML= "$ " +total+ ".00"
-                return(
-                    `<div class='cart-item'>
-                    <div class='row-img'>
-                     <img class='rowimg' src=${image}>
-                    </div>
-                    <p style='font-size:12px;'>${title}</p>
-                    <h2 style='font-size:15px;'>$ ${price}.00</h2>` +
-                    "<i class='fa-solid fa-trash' onclick='delElement("+ (j++) +")'></i></div>")
-
-                }).join('')
-            }
+window.onload=()=>{
+    todos=json.parse(localStorage.getItem('todos'))||[]
+    todos.forEach(todo => addtodo(todo))
         
-            
-            function incrementValue()
-            {
-                var value = parseInt(document.getElementById('number').value, 10);
-                value = isNaN(value) ? 0 : value;
-                if(value<10){
-                    value++;
-                        document.getElementById('number').value = value;
-                }
-            }
-            function decrementValue()
-            {
-                var value = parseInt(document.getElementById('number').value, 10);
-                value = isNaN(value) ? 0 : value;
-                if(value>1){
-                    value--;
-                        document.getElementById('number').value = value;
-                }
-            
-            }
+}
+
+button.addEventListener('click',()=> {
+    todos.push(input.value)
+    localStorage.setItem('todos',JSON.stringify(todos))
+    addtodo(input.value)
+    input.value = ''
+})
+
+btndel.addEventListener('click',()=> {
+    debugger;
+    remove(input.value)
+   // localStorage.setItem('todos',JSON.stringify(todos))
+   
+})
+
+function addtodo(todo){
+    let para = document.createElement('span');
+    para.innerText= todo;
+    para.classList.add(todos.length-1);
+    todolist.appendChild(para);
+    let myDiv = document.getElementById("todoList");
+    let button = document.createElement('BUTTON');
+    let text = document.createTextNode("X");
+
+    // appending text to button
+    button.appendChild(text);
+    button.classList.add(todos.length-1);
+    button.addEventListener("click", remove);
     
-        }
+    // appending button to div
+    myDiv.appendChild(button);
+    var br = document.createElement('br');
+    myDiv.appendChild(br);
+    myDiv.appendChild(br);
+    
+    
+
+}
+
+function remove(todo){
+    debugger;
+    var elementClass = todo.target.className;
+    todos.splice(typeof Number(elementClass), 1);
+    document.getElementsByClassName(elementClass)[0].remove();
+    document.getElementsByClassName(elementClass)[0].remove();
+    localStorage.setItem('todos', JSON.stringify(todos))
+}
+
+// if (elementClass !== '') {
+    //     console.log(elementClass);
+    //   }
+    //   // If element has no classes
+    //   else {
+    //     console.log('An element without a class was clicked');
+    //   }
+    // let index=todos.indexof(todo)
+    // todos.splice(index, 1);
+        // document.querySelectorAll(elementClass).forEach(el => el.remove()); //multi remove
