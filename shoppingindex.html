@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/9d30247117.js" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div class="header">
+    <p class="logo">KIDS BOOK SHOW</p>
+    <div class="carticon">
+        <i class="fa-sharp fa-solid fa-cart-shopping" onclick="showcart()"></i>
+
+         <p id="count">0</p>
+  </div>
+</div>
+<div class="container" >
+    <div id="root"></div>
+    
+        <div class="sidebar">
+            <div class="head"><p>My cart</p>
+        </div>
+            <div id="cartItem">Your cart is Empty</div>
+            
+            <div class="foot"><h3>Total</h3>
+             <h2 id="total">$0.00</h2></div>
+                <button id="Proceed" onclick="proceed()">Proceed To Buy</button>
+            </div>     
+</div>
+
+<script src="./script.js"></script>
+
+</body>
+
+</html>
